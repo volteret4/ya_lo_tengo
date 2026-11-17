@@ -1,0 +1,15 @@
+services:
+  ya-lo-tengo:
+    build: .
+    container_name: ya-lo-tengo
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ${LASTFM_DIR:-./datos/lastfm}:/lastfm:ro
+      - ${MIXXX_DIR:-./datos/mixxx}:/mixxx:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${PUERTO:-8780}:5000"
